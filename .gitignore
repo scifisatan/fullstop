@@ -4,7 +4,7 @@ venv/
 __pycache__/
 
 */*/.env
-*/*/chroma/
+
 
 */*/output.wav
 */*/user_audio.wav
@@ -14,7 +14,6 @@ __pycache__/
 */*/*.pyd
 */__pycache__/
 
-*/*/chroma/
 */*/output.wav
 */*/user_audio.wav
 */*/__pycache__/
