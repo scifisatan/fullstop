@@ -1,6 +1,10 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import FileResponse
 from fastapi import status
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
+import subprocess
 
 from server.index_docs import generate_data_store
 from server.inference import getResponseFromModel
@@ -9,7 +13,13 @@ from server.model import ChatResponse, ChatRequest, STTResponse, TTSResponse, TT
 
 app = FastAPI()
 
-@app.post("/chat", response_model=ChatResponse)
+# Set up the path to the static folder
+static_path = Path(__file__).parent / "dist"
+
+# Mount the static folder to the root path
+app.mount("/", StaticFiles(directory=static_path, html=True), name="static")
+
+@app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     global conversation_history
 
@@ -29,7 +39,7 @@ async def chat(request: ChatRequest):
 
 
 # STT Endpoint
-@app.post("/stt", response_model=STTResponse, status_code=status.HTTP_200_OK)
+@app.post("/api/stt", response_model=STTResponse, status_code=status.HTTP_200_OK)
 async def speech_to_text(file: UploadFile = File(...)):
     if not file.content_type == "audio/wav":
         raise HTTPException(
@@ -60,7 +70,7 @@ async def speech_to_text(file: UploadFile = File(...)):
     return STTResponse(text=text, message="STT conversion successful")
 
 # TTS Endpoint
-@app.post("/tts", status_code=status.HTTP_200_OK)
+@app.post("/api/tts", status_code=status.HTTP_200_OK)
 async def text_to_speech(request: TTSRequest):
     text = request.text
     if not text:
@@ -82,7 +92,19 @@ async def text_to_speech(request: TTSRequest):
     # Return the generated audio file as a response
     return FileResponse(speech_output_path, media_type="audio/wav", headers={"Content-Disposition": "attachment; filename=output_audio.wav"})
 
+
+import subprocess
+
+def build_frontend():
+    try:
+        # Navigate to the frontend directory, install dependencies, and build
+        subprocess.run(["cd", "frontend", "&&", "npm", "i", "&&", "npm", "run", "build"], shell=True, check=True)
+        print("Frontend built successfully!")
+    except subprocess.CalledProcessError as e:
+        print(f"Error during frontend build: {e}")
+
 if __name__ == "__main__":
     generate_data_store()
+    build_frontend()
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

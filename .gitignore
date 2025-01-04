@@ -30,6 +30,10 @@ __pycache__/
 */*/.DS_Store
 */*/.pytest_cache/
 */*/.mypy
+venv/
+dist/
+azurespeech/
+backend/
 
 node_modules/
 output_audio.wav
