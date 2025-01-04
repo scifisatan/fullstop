@@ -48,6 +48,7 @@ const ChatUI = () => {
     console.log("Navigating to voice chat...");
     navigate('/voice'); // Navigate to /voice
   };
+  
 const handleStart = () => {
     setMessages([
       {
@@ -169,31 +170,7 @@ const handleStart = () => {
             backgroundPosition: 'center 50%',
           }}
         ></div>
-   {/* Additional image (chat.svg) positioned at the top right */}
-   <div
-          className="absolute bg-no-repeat bg-contain opacity-20 z-0"
-          style={{ 
-            backgroundImage: 'url(chat.svg)',
-            backgroundSize: '20%', // Adjust the size of the image
-            width: '200px', // Set a fixed width
-            height: '200px', // Set a fixed height
-            top: '20%', // Position at the top
-            right: '25%', // Position at the right
-          }}
-        ></div>
 
-       
-          <div
-          className="absolute bg-no-repeat bg-contain opacity-20 z-0"
-          style={{ 
-            backgroundImage: 'url(chat.svg)',
-            backgroundSize: '20%', // Adjust the size of the image
-            width: '300px', // Set a fixed width
-            height: '100px', // Set a fixed height
-            top: '30%', // Position at the top
-            left: '100%', // Position at the right
-          }}
-        ></div>
 
           <div
           className="absolute bg-no-repeat bg-contain opacity-20 z-0"
@@ -220,17 +197,7 @@ const handleStart = () => {
           }}
         ></div>
 
-        <div
-          className="absolute bg-no-repeat bg-contain opacity-20 z-0"
-          style={{ 
-            backgroundImage: 'url(chat.svg)',
-            backgroundSize: '50%', // Adjust the size of the image
-            width: '200px', // Set a fixed width
-            height: '100px', // Set a fixed height
-            top: '70%', // Position at the top
-            right: '90%', // Position at the right
-          }}
-        ></div>
+  
 
         
         <div
